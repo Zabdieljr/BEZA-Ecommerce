@@ -1,0 +1,39 @@
+
+
+<div class="container">
+<table class="table table-hover">
+
+  <thead class="table-dark">
+<tr class=" align-middle text-info">
+  <th></th>
+  <th>Name</th>
+  <th>Unit Price</th>
+  <th>In Stock</th>
+  <th>Actions</th>
+  <th></th>
+</tr>
+</thead>
+  <tbody>
+  <tr *ngFor="let tempProduct of products">
+    <td class="align-middle">
+<img src="{{tempProduct.imageUrl}}" alt="image" width="50" height="50">
+
+    </td>
+    <td class="align-middle">{{tempProduct.name}}</td>
+    <td class="align-middle">{{tempProduct.unitPrice | currency:'USD'}}</td>
+
+
+    <td class="align-middle text-info" >{{tempProduct.unitsInStock}}</td>
+
+
+    <td>
+      <button type="button" class="btn btn-danger" (click)="null">Delete</button>
+    </td>
+    <td>
+      <button type="button" class="btn btn-primary" (click)="null">Edit</button> </td>
+  </tr>
+  </tbody>
+</table>
+<button type="button" class="btn btn-success" (click)="null">Add New Product</button>
+
+</div>
