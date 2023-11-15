@@ -23,6 +23,7 @@ const routes: Routes = [
     ProductListComponent
   ],
   imports: [
+    // configure routes for the application
     RouterModule.forRoot(routes),
     BrowserModule,
     AppRoutingModule,
