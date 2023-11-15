@@ -1,0 +1,9 @@
+
+
+
+<p *ngFor="let tempProduct of products">
+  {{tempProduct.name}}: {{tempProduct.unitPrice | currency:'USD'}}
+  <button class="ui-button" (click)="null">Delete</button>
+  <button class="ui-button" (click)="null">Edit</button>
+
+</p>
