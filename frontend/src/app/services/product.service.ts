@@ -6,6 +6,8 @@ import {Product} from "../common/product";
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class ProductService {
 
   private baseUrl = "http://localhost:8081/api/products";
@@ -15,7 +17,7 @@ export class ProductService {
     getProductList(theCategoryId: number): Observable<Product[]> {
     // @TODO: need to build URL based on category id
 
-      const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId?theCategoryId:1}`;
+      const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
 
     return this.httpClient.get<GetResponse>(searchUrl).pipe(
     map(response => response._embedded.products)
