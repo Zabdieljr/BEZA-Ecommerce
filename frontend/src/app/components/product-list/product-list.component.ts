@@ -19,7 +19,10 @@ export class ProductListComponent implements OnInit {
   thePageNumber: number = 1;
   //number of items in each page
   thePageSize: number = 8;
+  // total number of elements
   theTotalElements: number = 0;
+
+  previousKeyword: string = "";
 
 
 
@@ -50,13 +53,22 @@ export class ProductListComponent implements OnInit {
 
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    // now search for the products using keyword
-    this.productService.searchProducts(theKeyword).subscribe(
-      data => {
-        this.products = data;
+    // if we have a different keyword than previous
+    // then set thePageNumber to 1
+    if (this.previousKeyword != theKeyword) {
+      this.thePageNumber = 1;
+    }
+    this.previousKeyword = theKeyword;
+    console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
 
-      }
-    )
+
+    // now search for the products using keyword
+    this.productService.searchProductsPaginate(
+                      this.thePageNumber - 1,
+                               this.thePageSize,
+                                theKeyword).subscribe(this.processResult());
+
+
   }
 
   handleListProducts() {
@@ -89,14 +101,26 @@ export class ProductListComponent implements OnInit {
     // now get the products for the given category id
     this.productService.getProductListPaginate(this.thePageNumber - 1,
           this.thePageSize,
-          this.currentCategoryId).subscribe(data => {
-            this.products = data._embedded.products;
-        // now set the pagination properties
-                this.thePageNumber = data.page.number + 1;
-                this.thePageSize = data.page.size;
-                this.theTotalElements = data.page.totalElements;
-
-                }
+          this.currentCategoryId).subscribe(this.processResult()
                   );
       }
+
+  updatePageSize(value: string) {
+    this.thePageSize = +value;
+    this.thePageNumber = 1;
+    this.listProducts();
+  }
+
+  private processResult() {
+    return (data:any) => {
+      this.products = data._embedded.products;
+      // now set the pagination properties
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+
+
+
+    };
+  }
 }
