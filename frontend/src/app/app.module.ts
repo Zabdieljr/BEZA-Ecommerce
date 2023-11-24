@@ -13,7 +13,15 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 // add import ngb module
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+
+
+
+
+
 const routes: Routes = [
+  //add route for cart details
+  {path: 'cart-details', component: CartDetailsComponent},
   //add product details  component
   {path: 'products/:id', component: ProductDetailsComponent},
   //add a route for search by name
@@ -32,7 +40,8 @@ const routes: Routes = [
     ProductCategoryMenuComponent,
     SearchComponent,
     ProductDetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    CartDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
