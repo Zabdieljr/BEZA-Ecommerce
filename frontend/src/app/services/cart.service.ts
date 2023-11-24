@@ -15,11 +15,6 @@ export class CartService {
   cartItems:  CartItem[]= [];
   totalPrice: Subject<number>  = new Subject<number>();
   totalQuantity: Subject<number> = new Subject<number>();
-
-
-
-
-
   constructor() { }
 
   // add to cart
@@ -28,26 +23,22 @@ export class CartService {
     let alreadyExistsInCart: boolean = false;
     // @ts-ignore
     let existingCartItem: CartItem = undefined;
-    if(this.cartItems.length > 0){
+           if(this.cartItems.length > 0){
       // find the item in the cart based on item id
-         for(let tempCartItem of this.cartItems){
-          if(tempCartItem.id === theCartItem.id){
-            existingCartItem = tempCartItem;
-        break;
-        }
-       }
+      // @ts-ignore
+                   existingCartItem = this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
             // check if we found it
       alreadyExistsInCart = (existingCartItem != undefined);
       }
-    if(alreadyExistsInCart){
-      // increment the quantity
-      existingCartItem.quantity++;
-    }else{
-      // just add the item to the array
-      this.cartItems.push(theCartItem);
-    }
+                      if(alreadyExistsInCart){
+                        // increment the quantity
+                               existingCartItem.quantity++;
+                                }else{
+                        // just add the item to the array
+                                       this.cartItems.push(theCartItem);
+                        }
     // compute cart total price and total quantity
-    this.computeCartTotals();
+                               this.computeCartTotals();
   }
 
   private computeCartTotals() {
