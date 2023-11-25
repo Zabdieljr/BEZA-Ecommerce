@@ -14,12 +14,17 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import {ReactiveFormsModule} from "@angular/forms";
+
 
 
 
 
 
 const routes: Routes = [
+  //add route for checkout
+  {path: 'checkout', component: CheckoutComponent},
   //add route for cart details
   {path: 'cart-details', component: CartDetailsComponent},
   //add product details  component
@@ -41,14 +46,19 @@ const routes: Routes = [
     SearchComponent,
     ProductDetailsComponent,
     CartStatusComponent,
-    CartDetailsComponent
+    CartDetailsComponent,
+    CheckoutComponent,
+
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
     //add ngb module
-    ,NgbModule
+    NgbModule,
+    // add support for reactive forms
+    ReactiveFormsModule
+
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

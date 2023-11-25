@@ -514,7 +514,7 @@ input.au-input.au-input-xl{
     background:#fff
 }
 .main-content.page-m{
-    padding:10% 15%!important
+    padding:10% 30% 10% 5%
 }
 
 /*
@@ -666,6 +666,7 @@ label.date{
     -o-transform:rotate(45deg);
     transform:rotate(45deg)
 }
+
 option:first{
     color:#ccc
 }
@@ -980,7 +981,7 @@ footer ul li{
         text-align:center
     }
     .product-box{
-        text-align:centerg
+        text-align:center
     }
     .page-container{
         position:relative;
