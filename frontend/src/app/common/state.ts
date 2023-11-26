@@ -1,5 +1,3 @@
-
-
 export class State {
 
   //add properties constructor
@@ -7,11 +5,8 @@ export class State {
   constructor(
     public id: number,
     public name: string
-
   ) {
   }
-
-
 
 
 }

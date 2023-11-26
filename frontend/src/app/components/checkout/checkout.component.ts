@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Luv2ShopFormService} from "../../services/luv2-shop-form.service";
 import {State} from "../../common/state";
 import {Country} from "../../common/country";
