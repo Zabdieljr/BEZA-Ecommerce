@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 //add cross-origin support
 @CrossOrigin("http://localhost:4200")
+
+// add RepositoryRestResource annotation
 @RepositoryRestResource(collectionResourceRel = "productCategory", path = "product-category")
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {
 }
