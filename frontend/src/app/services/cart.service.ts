@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CartItem} from "../common/cart-item";
 import {BehaviorSubject, Subject} from "rxjs";
 
@@ -12,39 +12,55 @@ export class CartService {
   // remove from cart
   // calculate total price
 
-  cartItems:  CartItem[]= [];
-  totalPrice: Subject<number>  = new BehaviorSubject<number>(0);
+  cartItems: CartItem[] = [];
+  totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
-  constructor() { }
+
+ // storage: Storage = sessionStorage;
+// localStorage is persistent and keeps data even after the browser is closed
+   storage: Storage = localStorage;
+  constructor() {
+
+    // read data from storage
+    let data = JSON.parse(this.storage.getItem('cartItems')!);
+
+    if (data != null) {
+      this.cartItems = data;
+
+      // compute totals based on the data that is read from storage
+      this.computeCartTotals();
+    }
+
+  }
 
   // add to cart
-  addToCart(theCartItem: CartItem){
+  addToCart(theCartItem: CartItem) {
     // check if we already have the item in our cart
     let alreadyExistsInCart: boolean = false;
     // @ts-ignore
     let existingCartItem: CartItem = undefined;
-           if(this.cartItems.length > 0){
+    if (this.cartItems.length > 0) {
       // find the item in the cart based on item id
       // @ts-ignore
-                   existingCartItem = this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
-            // check if we found it
+      existingCartItem = this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
+      // check if we found it
       alreadyExistsInCart = (existingCartItem != undefined);
-      }
-                      if(alreadyExistsInCart){
-                        // increment the quantity
-                               existingCartItem.quantity++;
-                                }else{
-                        // just add the item to the array
-                                       this.cartItems.push(theCartItem);
-                        }
+    }
+    if (alreadyExistsInCart) {
+      // increment the quantity
+      existingCartItem.quantity++;
+    } else {
+      // just add the item to the array
+      this.cartItems.push(theCartItem);
+    }
     // compute cart total price and total quantity
-                               this.computeCartTotals();
+    this.computeCartTotals();
   }
 
   computeCartTotals() {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
-    for(let currentCartItem of this.cartItems){
+    for (let currentCartItem of this.cartItems) {
       totalPriceValue += currentCartItem.quantity * currentCartItem.unitPrice;
       totalQuantityValue += currentCartItem.quantity;
     }
@@ -53,11 +69,18 @@ export class CartService {
     this.totalQuantity.next(totalQuantityValue);
     // log cart data just for debugging purposes
     this.logCartData(totalPriceValue, totalQuantityValue);
+
+    // persist cart data
+    this.persistCartItems();
+  }
+
+  persistCartItems() {
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
   }
 
   private logCartData(totalPriceValue: number, totalQuantityValue: number) {
     console.log('Contents of the cart');
-    for(let tempCartItem of this.cartItems){
+    for (let tempCartItem of this.cartItems) {
       const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
       console.log(`name: ${tempCartItem.name},
       quantity=${tempCartItem.quantity},
@@ -78,8 +101,7 @@ export class CartService {
 
     if (theCartItem.quantity === 0) {
       this.remove(theCartItem);
-    }
-    else {
+    } else {
       this.computeCartTotals();
     }
   }
@@ -87,7 +109,7 @@ export class CartService {
   remove(theCartItem: CartItem) {
 
     // get index of item in the array
-    const itemIndex = this.cartItems.findIndex( tempCartItem => tempCartItem.id === theCartItem.id );
+    const itemIndex = this.cartItems.findIndex(tempCartItem => tempCartItem.id === theCartItem.id);
 
     // if found, remove the item from the array at the given index
     if (itemIndex > -1) {
