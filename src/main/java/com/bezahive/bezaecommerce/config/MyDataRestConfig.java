@@ -1,9 +1,6 @@
 package com.bezahive.bezaecommerce.config;
 
-import com.bezahive.bezaecommerce.domain.Country;
-import com.bezahive.bezaecommerce.domain.Product;
-import com.bezahive.bezaecommerce.domain.ProductCategory;
-import com.bezahive.bezaecommerce.domain.State;
+import com.bezahive.bezaecommerce.domain.*;
 import jakarta.persistence.EntityManager;
 
 import jakarta.persistence.metamodel.EntityType;
@@ -44,6 +41,8 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
         disableHttpMethods(Country.class, config, theUnsupportedActions);
         disableHttpMethods(State.class, config, theUnsupportedActions);
+        // make the order class read only
+        disableHttpMethods(Order.class, config, theUnsupportedActions);
 
         // call an internal helper method
         exposeIds(config);

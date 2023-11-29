@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
+import {OrderHistory} from "../../common/order-history";
 
 @Component({
   selector: 'app-login-status',
@@ -11,6 +12,9 @@ export class LoginStatusComponent implements OnInit {
 
   isAuthenticated: boolean = false;
   userFullName: string = '';
+
+  // add an entry for the browser storage
+  storage = sessionStorage;
 
   constructor(private oktaAuthService: OktaAuthStateService,
               @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
@@ -35,6 +39,14 @@ export class LoginStatusComponent implements OnInit {
       this.oktaAuth.getUser().then(
         (res) => {
           this.userFullName = res.name as string;
+
+
+          // retrieve the user's email from authentication response
+          const theEmail = res.email;
+
+          // now store the email in browser storage
+          this.storage.setItem('userEmail', JSON.stringify(theEmail));
+
         }
       );
     }
@@ -45,4 +57,5 @@ export class LoginStatusComponent implements OnInit {
     this.oktaAuth.signOut();
   }
 
+  protected readonly OrderHistory = OrderHistory;
 }
