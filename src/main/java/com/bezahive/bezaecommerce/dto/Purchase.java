@@ -1,4 +1,4 @@
-package dto;
+package com.bezahive.bezaecommerce.dto;
 
 import com.bezahive.bezaecommerce.domain.Address;
 import com.bezahive.bezaecommerce.domain.Customer;

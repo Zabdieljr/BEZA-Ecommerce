@@ -2,11 +2,10 @@ package com.bezahive.bezaecommerce.controllers;
 
 
 import com.bezahive.bezaecommerce.services.CheckoutService;
-import dto.Purchase;
-import dto.PurchaseResponse;
+import com.bezahive.bezaecommerce.dto.Purchase;
+import com.bezahive.bezaecommerce.dto.PurchaseResponse;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api/checkout")
 public class CheckoutController {

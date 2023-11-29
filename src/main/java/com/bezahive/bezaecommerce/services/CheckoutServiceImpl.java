@@ -5,8 +5,8 @@ import com.bezahive.bezaecommerce.domain.Customer;
 import com.bezahive.bezaecommerce.domain.Order;
 import com.bezahive.bezaecommerce.domain.OrderItem;
 import com.bezahive.bezaecommerce.repositories.CustomerRepository;
-import dto.Purchase;
-import dto.PurchaseResponse;
+import com.bezahive.bezaecommerce.dto.Purchase;
+import com.bezahive.bezaecommerce.dto.PurchaseResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +43,19 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         // populate customer with order
         Customer customer = purchase.getCustomer();
+
+        // check if this is an existing customer
+        String theEmail = customer.getEmail();
+        Customer customerFromDB = customerRepository.findByEmail(theEmail);
+
+        if (customerFromDB != null) {
+            // we found them ... let's assign them accordingly
+            customer = customerFromDB;
+        }
+
+
+
+
         customer.add(order);
 
         // save to the database

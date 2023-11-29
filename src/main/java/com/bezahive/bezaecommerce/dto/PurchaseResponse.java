@@ -1,4 +1,4 @@
-package dto;
+package com.bezahive.bezaecommerce.dto;
 
 import lombok.Data;
 

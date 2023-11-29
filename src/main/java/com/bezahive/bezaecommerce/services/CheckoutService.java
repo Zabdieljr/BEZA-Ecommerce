@@ -1,7 +1,7 @@
 package com.bezahive.bezaecommerce.services;
 
-import dto.Purchase;
-import dto.PurchaseResponse;
+import com.bezahive.bezaecommerce.dto.Purchase;
+import com.bezahive.bezaecommerce.dto.PurchaseResponse;
 
 public interface CheckoutService {
 
