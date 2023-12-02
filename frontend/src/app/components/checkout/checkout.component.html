@@ -180,7 +180,7 @@
         <!-- Add check box to copy shipping to billing -->
         <div class="input-space">
           <label class="au-checkbox">
-            <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
+            <input type="checkbox" (change)="copyShippingAddressToBillingAddress($any($event).target.value)">
             <span class="au-checkmark"></span>Billing Address same as Shipping Address
           </label>
         </div>
@@ -295,116 +295,20 @@
 
         </div>
 
-        <!-- Credit Card -->
+        <!-- Stripe Elements Credit Card Section -->
         <div formGroupName="creditCard" class="form-area">
-          <h3>Credit Card</h3>
 
-          <div class="row">
-            <div class="col-md-2"><label>Card Type</label></div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select formControlName="cardType">
+          <h3>Credit or Debit Card</h3>
 
-
-                  <option>Visa</option>
-                  <option>Mastercard</option>
-                </select>
-                <div *ngIf="creditCardType?.invalid && (creditCardType?.dirty || creditCardType?.touched)"
-                     class="alert alert-danger mt-1">
-                  <div *ngIf="creditCardType?.errors ? creditCardType?.errors : ['required']">
-                    Card Type is required
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div id="card-element">
+            <!-- a Stripe element will be inserted here -->
           </div>
 
-          <div class="row">
-            <div class="col-md-2"><label>Name on Card</label></div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input formControlName="nameOnCard" type="text">
-
-                <div
-                  *ngIf="creditCardNameOnCard?.invalid && (creditCardNameOnCard?.dirty || creditCardNameOnCard?.touched)"
-                  class="alert alert-danger mt-1">
-                  <div
-                    *ngIf="creditCardNameOnCard?.errors ? creditCardNameOnCard?.errors : ['required'] || creditCardNameOnCard?.errors ? creditCardNameOnCard?.errors : ['notOnlyWhitespace']">
-                    Name on Card is required
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-2"><label>Card Number</label></div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input formControlName="cardNumber" type="text">
-                <div *ngIf="creditCardNumber?.invalid && (creditCardNumber?.dirty || creditCardNumber?.touched)"
-                     class="alert alert-danger mt-1">
-                  <div
-                    *ngIf="creditCardNumber?.errors ? creditCardNumber?.errors : ['required'] || creditCardNumber?.errors ? creditCardNumber?.errors : ['notOnlyWhitespace']">
-                    Card Number is required
-                  </div>
-                  <div *ngIf="creditCardNumber?.errors ? creditCardNumber?.errors : ['pattern']">
-                    Card Number must be 16 characters long
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-2"><label>Security Code</label></div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input formControlName="securityCode" type="text">
-
-                <div
-                  *ngIf="creditCardSecurityCode?.invalid && (creditCardSecurityCode?.dirty || creditCardSecurityCode?.touched)"
-                  class="alert alert-danger mt-1">
-                  <div
-                    *ngIf="creditCardSecurityCode?.errors ? creditCardSecurityCode?.errors : ['required'] || creditCardSecurityCode?.errors ? creditCardSecurityCode?.errors : ['notOnlyWhitespace']">
-                    Security Code is required
-                  </div>
-                  <div *ngIf="creditCardSecurityCode?.errors ? creditCardSecurityCode?.errors : ['pattern']">
-                    Security Code must be 3 characters long
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-2"><label>Expiration Month</label></div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select formControlName="expirationMonth">
-                  <option *ngFor="let month of creditCardMonths">
-                    {{ month }}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-2"><label>Expiration Year</label></div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
-                  <option *ngFor="let year of creditCardYears">
-                    {{ year }}
-                </select>
-              </div>
-            </div>
-          </div>
+          <!-- Used to display form errors -->
+          <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'"></div>
 
         </div>
+
 
         <!-- Order details -->
         <div class="form-area">
@@ -412,10 +316,12 @@
 
           <p>Total Quantity: {{ totalQuantity }}</p>
           <p>Shipping: FREE</p>
-          <p>Total Price: {{ totalPrice | currency: 'USD' }}</p>
-        </div>
+          <p>Coupons and Discounts</p>
+          <!--  <p>Subtotal: {{ coupons | currency: 'USD' }}</p> -->
+            <p>Total Price: {{ totalPrice | currency: 'USD' }}</p>
+          </div>
 
-        <!-- submit button-->
+          <!-- submit button-->
         <div class="text-center">
           <button type="submit" class="btn btn-info">Purchase</button>
         </div>
